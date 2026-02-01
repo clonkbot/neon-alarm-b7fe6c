@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏰</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEON ALARM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --neon-pink: #ff2d95;
+        --neon-cyan: #00f5ff;
+        --neon-purple: #b026ff;
+        --dark-bg: #0a0a0f;
+        --glass-bg: rgba(20, 20, 35, 0.6);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Rajdhani', sans-serif;
+        background: var(--dark-bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      
+      .font-orbitron {
+        font-family: 'Orbitron', monospace;
+      }
+      
+      .neon-glow-pink {
+        text-shadow: 
+          0 0 5px var(--neon-pink),
+          0 0 10px var(--neon-pink),
+          0 0 20px var(--neon-pink),
+          0 0 40px var(--neon-pink);
+      }
+      
+      .neon-glow-cyan {
+        text-shadow: 
+          0 0 5px var(--neon-cyan),
+          0 0 10px var(--neon-cyan),
+          0 0 20px var(--neon-cyan),
+          0 0 40px var(--neon-cyan);
+      }
+      
+      .neon-border {
+        box-shadow: 
+          0 0 5px var(--neon-cyan),
+          0 0 10px var(--neon-cyan),
+          inset 0 0 5px rgba(0, 245, 255, 0.1);
+        border: 1px solid var(--neon-cyan);
+      }
+      
+      .neon-border-pink {
+        box-shadow: 
+          0 0 5px var(--neon-pink),
+          0 0 10px var(--neon-pink),
+          inset 0 0 5px rgba(255, 45, 149, 0.1);
+        border: 1px solid var(--neon-pink);
+      }
+      
+      .glass {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      
+      .grid-bg {
+        background-image: 
+          linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+      }
+      
+      @keyframes pulse-glow {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      
+      @keyframes scan-line {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(100vh); }
+      }
+      
+      .animate-pulse-glow {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+      
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      .scan-line {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+        animation: scan-line 8s linear infinite;
+        pointer-events: none;
+        opacity: 0.3;
+      }
+      
+      .digit-flip {
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+      
+      .alarm-ring {
+        animation: ring 0.5s ease-in-out infinite alternate;
+      }
+      
+      @keyframes ring {
+        0% { transform: rotate(-5deg) scale(1); }
+        100% { transform: rotate(5deg) scale(1.05); }
+      }
+      
+      @keyframes border-dance {
+        0%, 100% { border-color: var(--neon-pink); box-shadow: 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink); }
+        50% { border-color: var(--neon-cyan); box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan); }
+      }
+      
+      .alarm-active-border {
+        animation: border-dance 1s ease-in-out infinite;
+      }
+      
+      input[type="time"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        cursor: pointer;
+      }
+      
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.3);
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: var(--neon-cyan);
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
